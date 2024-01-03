@@ -88,6 +88,11 @@ func makeTailscaleHTTPRequest(authKey string, address string, logger logger.Logf
 	srv := &tsnet.Server{
 		AuthKey: authKey,
 		Logf:    logger,
+
+		// If empty, this will default to a new directory
+		// in the user config directory.
+		// https://pkg.go.dev/tailscale.com/tsnet#Server
+		Dir: os.Getenv("TSNET_STATE_DIR"),
 	}
 
 	status, err := srv.Up(context.Background())
